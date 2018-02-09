@@ -1,0 +1,19 @@
+language: go
+
+go:
+  - "1.10"
+
+install:
+  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+  - dep ensure -v --vendor-only
+
+script:
+  - go build ./cmd/gochange
+  - ./go.test.sh
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: rm coverage.txt && rm gochange && curl -sL http://git.io/goreleaser | bash
+    on:
+      tags: true
