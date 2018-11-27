@@ -11,6 +11,9 @@ script:
   - go build ./cmd/gochange
   - ./go.test.sh
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
 deploy:
   - provider: script
     skip_cleanup: true
