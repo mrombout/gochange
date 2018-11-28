@@ -88,7 +88,9 @@ func parseUnreleased(stack *tokenStack, changelog *Changelog) error {
 		Name: "Unreleased",
 	}
 
-	parseReleaseSections(stack, changelog, &currentRelease)
+	if err := parseReleaseSections(stack, changelog, &currentRelease); err != nil {
+		return err
+	}
 
 	changelog.Unreleased = currentRelease
 

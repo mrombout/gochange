@@ -1,67 +1,82 @@
 package changelog
 
-// func TestRender(t *testing.T) {
-// 	// arrange
-// 	release020 := Release{
-// 		Name: "0.2.0",
-// 		Date: "2018-08-14",
-// 		Added: []Entry{
-// 			Entry{
-// 				Description: "Some stuff.",
-// 			},
-// 		},
-// 		PreviousRelease: &Release{
-// 			Name: "NONE",
-// 		},
-// 	}
-// 	release100 := Release{
-// 		Name: "1.0.0",
-// 		Date: "2018-12-28",
-// 		Added: []Entry{
-// 			Entry{
-// 				Description: "Some stuff.",
-// 			},
-// 		},
-// 		PreviousRelease: &release020,
-// 	}
+import (
+	"io/ioutil"
+	"strings"
+	"testing"
+)
 
-// 	currentChangelog := Changelog{
-// 		URL:         "http://github.com/mrombout/gochange/",
-// 		Description: "Lorum ipsum dolor sit amet consectatur.",
-// 		Unreleased: Release{
-// 			Name: "Unreleased",
-// 			Added: []Entry{
-// 				Entry{
-// 					Description: "Some more stuff.",
-// 				},
-// 				Entry{
-// 					Description: "Even more stuff.",
-// 				},
-// 			},
-// 			Removed: []Entry{
-// 				Entry{
-// 					Description: "Easter egg.",
-// 				},
-// 				Entry{
-// 					Description: "Bitcoin Miner",
-// 				},
-// 			},
-// 			Changed: []Entry{
-// 				Entry{
-// 					Description: "Some things.",
-// 				},
-// 			},
-// 		},
-// 		LatestRelease: release100,
-// 		Releases: []Release{
-// 			release100,
-// 			release020,
-// 		},
-// 	}
+func TestRender(t *testing.T) {
+	// arrange
+	release020 := Release{
+		Name: "0.2.0",
+		Date: "2018-08-14",
+		Added: []Entry{
+			Entry{
+				Description: "Some stuff.",
+			},
+		},
+		PreviousRelease: &Release{
+			Name: "NONE",
+		},
+	}
+	release100 := Release{
+		Name: "1.0.0",
+		Date: "2018-12-28",
+		Added: []Entry{
+			Entry{
+				Description: "Some stuff.",
+			},
+		},
+		PreviousRelease: &release020,
+	}
 
-// 	// act
-// 	Render(currentChangelog, os.Stdout)
+	currentChangelog := Changelog{
+		URL:         "http://github.com/mrombout/gochange/",
+		Description: "Lorum ipsum dolor sit amet consectatur.",
+		Unreleased: Release{
+			Name: "Unreleased",
+			Added: []Entry{
+				Entry{
+					Description: "Some more stuff.",
+				},
+				Entry{
+					Description: "Even more stuff.",
+				},
+			},
+			Removed: []Entry{
+				Entry{
+					Description: "Easter egg.",
+				},
+				Entry{
+					Description: "Bitcoin Miner",
+				},
+			},
+			Changed: []Entry{
+				Entry{
+					Description: "Some things.",
+				},
+			},
+		},
+		LatestRelease: release100,
+		Releases: []Release{
+			release100,
+			release020,
+		},
+	}
+	expectedOutput, err := ioutil.ReadFile("testdata/rendered.md")
+	if err != nil {
+		t.Error(err)
+	}
+	actualOutput := strings.Builder{}
 
-// 	// assert
-// 	t.Fail()
-// }
+	// act
+	Render(currentChangelog, &actualOutput)
+
+	// assert
+	actualOutputStr := actualOutput.String()
+	actualExpectedOutputStr := string(expectedOutput)
+	if actualOutputStr != actualExpectedOutputStr {
+		t.Errorf("actual output does not match expected output")
+	}
+}
