@@ -1,8 +1,6 @@
 package main
 
 import (
-	"os"
-
 	"github.com/mrombout/gochange/changelog"
 	"github.com/spf13/cobra"
 )
@@ -23,7 +21,7 @@ var initCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Println("Initializing changelog...")
 
-		file, err := os.Create("CHANGELOG.md")
+		file, err := appFs.Create("CHANGELOG.md")
 		if err != nil {
 			panic(err)
 		}

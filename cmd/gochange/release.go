@@ -39,7 +39,7 @@ var releaseCmd = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		file, err := os.OpenFile("CHANGELOG.md", os.O_RDWR, 0644)
+		file, err := appFs.OpenFile("CHANGELOG.md", os.O_RDWR, 0644)
 		if err != nil {
 			panic(err)
 		}
