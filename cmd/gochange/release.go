@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"errors"
 	"os"
-	"time"
 
 	"github.com/mrombout/gochange/changelog"
 	"github.com/spf13/cobra"
@@ -55,17 +54,8 @@ var releaseCmd = &cobra.Command{
 			panic(err)
 		}
 
-		newRelease := currentChangelog.Unreleased
-		newRelease.Name = args[0]
-		newRelease.Date = time.Now().Format("2006-01-02")
-
-		if len(currentChangelog.Releases) > 0 {
-			newRelease.PreviousRelease = &currentChangelog.Releases[0]
-		}
-
-		currentChangelog.Releases = append([]changelog.Release{newRelease}, currentChangelog.Releases...)
-
-		currentChangelog.Unreleased = changelog.Release{}
+		name := args[0]
+		currentChangelog.Release(name)
 
 		file.Seek(0, 0)
 		file.Truncate(0)

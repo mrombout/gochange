@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/mrombout/gochange/changelog"
 	"github.com/spf13/cobra"
@@ -34,34 +33,8 @@ var rootCmd = &cobra.Command{
 			panic(err)
 		}
 
-		change := args[0]
-
-		switch {
-		case strings.HasPrefix(change, "Added"):
-			currentChangelog.Unreleased.Added = append(currentChangelog.Unreleased.Added, changelog.Entry{
-				Description: change,
-			})
-		case strings.HasPrefix(change, "Changed"):
-			currentChangelog.Unreleased.Changed = append(currentChangelog.Unreleased.Changed, changelog.Entry{
-				Description: change,
-			})
-		case strings.HasPrefix(change, "Deprecated"):
-			currentChangelog.Unreleased.Deprecated = append(currentChangelog.Unreleased.Deprecated, changelog.Entry{
-				Description: change,
-			})
-		case strings.HasPrefix(change, "Removed"):
-			currentChangelog.Unreleased.Removed = append(currentChangelog.Unreleased.Removed, changelog.Entry{
-				Description: change,
-			})
-		case strings.HasPrefix(change, "Fixed"):
-			currentChangelog.Unreleased.Fixed = append(currentChangelog.Unreleased.Fixed, changelog.Entry{
-				Description: change,
-			})
-		case strings.HasPrefix(change, "Security"):
-			currentChangelog.Unreleased.Security = append(currentChangelog.Unreleased.Security, changelog.Entry{
-				Description: change,
-			})
-		}
+		entry := args[0]
+		currentChangelog.AddEntry(entry)
 
 		file.Seek(0, 0)
 		file.Truncate(0)
