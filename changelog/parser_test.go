@@ -386,3 +386,55 @@ func TestParseInvalidHeaderReturnsError(t *testing.T) {
 		t.Errorf("expected error to be '%v', but was '%v'", expectedError.Error(), err.Error())
 	}
 }
+
+func TestParseIncorrectUnreleasedError(t *testing.T) {
+	expectedError := errors.New("unexpected token")
+	tokenStack := []token{
+		header1Title{Content: "Changelog"},
+		emptyLine{},
+		textLine{},
+		emptyLine{},
+		releaseTitle{Content: "Unreleased"},
+		sectionTitle{Content: "Added"},
+		changeEntry{Content: "Added a bug."},
+		emptyLine{},
+		releaseCompareLink{},
+	}
+
+	_, err := Parse(tokenStack)
+
+	if err == nil {
+		t.Fatalf("expected error to be '%v', but was nil", expectedError.Error())
+	}
+	if err.Error() != expectedError.Error() {
+		t.Errorf("expected error to be '%v', but was '%v'", expectedError.Error(), err.Error())
+	}
+}
+
+func TestParseIncorrectReleaseError(t *testing.T) {
+	expectedError := errors.New("unexpected token")
+	tokenStack := []token{
+		header1Title{Content: "Changelog"},
+		emptyLine{},
+		textLine{},
+		emptyLine{},
+		releaseTitle{Content: "Unreleased"},
+		sectionTitle{Content: "Added"},
+		emptyLine{},
+		changeEntry{Content: "Added a bug."},
+		emptyLine{},
+		releaseTitle{Content: "v1.0.0"},
+		sectionTitle{Content: "Added"},
+		changeEntry{Content: "Added an easter egg."},
+		releaseCompareLink{},
+	}
+
+	_, err := Parse(tokenStack)
+
+	if err == nil {
+		t.Fatalf("expected error to be '%v', but was nil", expectedError.Error())
+	}
+	if err.Error() != expectedError.Error() {
+		t.Errorf("expected error to be '%v', but was '%v'", expectedError.Error(), err.Error())
+	}
+}
