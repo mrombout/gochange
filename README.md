@@ -1,7 +1,7 @@
 # GoChange
 Go tool that helps writing changelogs.
 
-[![Build Status](https://travis-ci.org/mrombout/gochange.svg?branch=master)](https://travis-ci.org/mrombout/gochange)
+[![master](https://github.com/mrombout/gochange/actions/workflows/master.yml/badge.svg)](https://github.com/mrombout/gochange/actions/workflows/master.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mrombout/gochange)](https://goreportcard.com/report/github.com/mrombout/gochange)
 [![codecov](https://codecov.io/gh/mrombout/gochange/branch/master/graph/badge.svg)](https://codecov.io/gh/mrombout/gochange)
 
