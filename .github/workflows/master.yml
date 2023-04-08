@@ -1,0 +1,30 @@
+name: Master
+
+on:
+  push:
+    branches:
+      - master
+      - gh-actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+      - run: go build ./...
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+      - run: go test ./...
+  dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+      - uses: actions/go-dependency-submission@v1
+        with:
+            go-mod-path: go.mod
+            go-build-target: cmd/gochange/main.go

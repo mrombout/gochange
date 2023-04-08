@@ -12,3 +12,5 @@
 
 # Vendored dependencies
 vendor/
+
+dist/
