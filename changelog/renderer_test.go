@@ -12,7 +12,7 @@ func TestRender(t *testing.T) {
 		Name: "0.2.0",
 		Date: "2018-08-14",
 		Added: []Entry{
-			Entry{
+			{
 				Description: "Some stuff.",
 			},
 		},
@@ -24,7 +24,7 @@ func TestRender(t *testing.T) {
 		Name: "1.0.0",
 		Date: "2018-12-28",
 		Added: []Entry{
-			Entry{
+			{
 				Description: "Some stuff.",
 			},
 		},
@@ -37,23 +37,23 @@ func TestRender(t *testing.T) {
 		Unreleased: Release{
 			Name: "Unreleased",
 			Added: []Entry{
-				Entry{
+				{
 					Description: "Some more stuff.",
 				},
-				Entry{
+				{
 					Description: "Even more stuff.",
 				},
 			},
 			Removed: []Entry{
-				Entry{
+				{
 					Description: "Easter egg.",
 				},
-				Entry{
+				{
 					Description: "Bitcoin Miner",
 				},
 			},
 			Changed: []Entry{
-				Entry{
+				{
 					Description: "Some things.",
 				},
 			},
